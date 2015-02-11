@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
 # modified version of
 # https://github.com/dubture-dockerfiles/nginx-php/blob/master/startup.sh
 
 # Function to update the fpm configuration
 # to make the service environment variables available
-function setEnvironmentVariable() {
+function set_env {
 	if [ -z "$2" ]; then
 		echo "Environment variable '$1' not set."
 		return
@@ -21,10 +22,10 @@ function setEnvironmentVariable() {
 }
 
 # Grep for variables that look like docker set them (_PORT_)
-for _curVar in `env | grep '_PORT_\|_ENV' | awk -F = '{print $1}'`;do
+for var in `env | grep '_PORT_\|_ENV' | awk -F = '{print $1}'`;do
 	# awk has split them by the equals sign
 	# Pass the name and value to our function
-	setEnvironmentVariable ${_curVar} ${!_curVar}
+	set_env ${var} ${!var}
 done
 
 php5-fpm -c /etc/php5/fpm
