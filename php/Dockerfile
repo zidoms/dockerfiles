@@ -27,6 +27,9 @@ RUN sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini
 RUN sed -i "s/;daemonize = yes/daemonize = no/" /etc/php5/fpm/php-fpm.conf
 RUN sed -i "s%listen = /var/run/php5-fpm.sock%listen = 0.0.0.0:9000%" /etc/php5/fpm/pool.d/www.conf
 
+ADD start-container /usr/local/bin/start-container
+RUN chmod +x /usr/local/bin/start-container
+
 RUN mkdir /var/www
 
 WORKDIR /var/www
@@ -34,4 +37,4 @@ WORKDIR /var/www
 VOLUME ["/var/www"]
 EXPOSE 9000
 
-CMD ["php5-fpm", "-c", "/etc/php5/fpm"]
+CMD ["start-container"]
