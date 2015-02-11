@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# IP address of linked container
+# Assumes alias of "FPM"
+if [ -z "$FPM_PORT_9000_TCP_ADDR" ]; then
+    echo "Linked container of alias 'FPM' not found. Must expose port 9000."
+    exit 1
+fi
+
+
+# Copy template file and replace with linked container env var
+rm /etc/nginx/sites-available/default
+cp /etc/nginx/sites-available/default.tmpl /etc/nginx/sites-available/default
+sed -i "s/FPM_PORT_9000_TCP_ADDR/$FPM_PORT_9000_TCP_ADDR/" /etc/nginx/sites-available/default
+
+
+# Start nginx
+nginx -g "daemon off;"
