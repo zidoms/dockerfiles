@@ -9,6 +9,10 @@ ENV LC_ALL en_US.UTF-8
 RUN apt-get update
 RUN apt-get install -y vim curl wget software-properties-common git zsh
 
+RUN add-apt-repository -y ppa:cpick/hub
+RUN apt-get update
+RUN apt-get install -y hub
+
 RUN git clone --recursive https://github.com/zoli/dotfiles.git ~/.dotfiles
 RUN ln -s ~/.dotfiles/vimrc ~/.vimrc
 RUN ln -s ~/.dotfiles/vim ~/.vim
