@@ -10,9 +10,9 @@ RUN apt-get update
 RUN apt-get install -y vim curl wget software-properties-common git zsh
 
 RUN git clone --recursive https://github.com/zoli/dotfiles.git ~/.dotfiles
-RUN ln -s ~/.dotfiles/zshrc ~/.zshrc
 RUN ln -s ~/.dotfiles/vimrc ~/.vimrc
 RUN ln -s ~/.dotfiles/vim ~/.vim
 RUN ln -s ~/.dotfiles/gitignore ~/.gitignore
 RUN ln -s ~/.dotfiles/gitconfig ~/.gitconfig
-RUN export TERM=xterm
+
+ADD zshrc /root/.zshrc
